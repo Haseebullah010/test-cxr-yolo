@@ -10,9 +10,9 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...          
       - docker build -t cxr-yolov5 .
-      - docker tag cxr-yolov5:latest 323145895334.dkr.ecr.ap-southeast-1.amazonaws.com/cxr-yolov5:cxr-yolov5 
+      - docker tag cxr-test-yolo:latest 323145895334.dkr.ecr.ap-southeast-1.amazonaws.com/cxr-test-yolo:cxr-test-yolo
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push 323145895334.dkr.ecr.ap-southeast-1.amazonaws.com/cxr-yolov5:cxr-yolov5
+      - docker push 323145895334.dkr.ecr.ap-southeast-1.amazonaws.com/cxr-test-yolo:cxr-test-yolo
