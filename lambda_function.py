@@ -14,7 +14,7 @@ s3 = boto3.client('s3')
 s3_resource = boto3.resource('s3')
 
 #S3 bucket name 
-destination_bucketname = os.environ['cxr_dataset_yolo']
+destination_bucketname = os.environ['test-yolo-bucket']
 
 
 def lambda_handler(event, context):
