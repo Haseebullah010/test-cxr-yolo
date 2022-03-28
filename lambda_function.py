@@ -18,14 +18,17 @@ destination_bucketname = os.environ['test_yolo_bucket']
 
 destination = 'test-yolo-bucket'
 def lambda_handler(event, context):
+    print ("in lambda function")
     
     try:
+        print ("in first try")
         image_bytes = event['body'].encode('utf-8')
         img_b64dec = base64.b64decode(image_bytes)
         img_byteIO = BytesIO(img_b64dec)
         s3.put_object(Bucket=destination, Key='input_images/'+'l.jpg', Body=img_byteIO)
         return {'statusCode': 200, 'body': json.dumps({'message': 'successful lambda function call'}), 'headers': {'Access-Control-Allow-Origin': '*'}}
     except :
+        print ("in first except")
         return {'statusCode': 400, 'body': json.dumps({'message': 'failed '}), 'headers': {'Access-Control-Allow-Origin': '*'}}
 
     print("Event :", event)
