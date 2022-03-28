@@ -27,24 +27,24 @@ def lambda_handler(event, context):
         print ("in first try")
         image_bytes = event['body'].encode('utf-8')
         img_b64dec = base64.b64decode(image_bytes)
-        img_byteIO = BytesIO(img_b64dec)
+        filename = BytesIO(img_b64dec)
 #         s3.put_object(Bucket=destination, Key='input_images/'+'l.jpg', Body=img_byteIO)
-        return {'statusCode': 200, 'body': json.dumps({'message': 'successful lambda function call'}), 'headers': {'Access-Control-Allow-Origin': '*'}}
+#         return {'statusCode': 200, 'body': json.dumps({'message': 'successful lambda function call'}), 'headers': {'Access-Control-Allow-Origin': '*'}}
     except Exception as e:
         print ("in first except",e)
-        return {'statusCode': 400, 'body': json.dumps({'message': 'failed '}), 'headers': {'Access-Control-Allow-Origin': '*'}}
+#         return {'statusCode': 400, 'body': json.dumps({'message': 'failed '}), 'headers': {'Access-Control-Allow-Origin': '*'}}
 
-    print("Event :", event)
-    source_bucket_name = event['Records'][0]['s3']['bucket']['name']
-    print("Source bucket name is: ", source_bucket_name, "only")
+#     print("Event :", event)
+#     source_bucket_name = event['Records'][0]['s3']['bucket']['name']
+#     print("Source bucket name is: ", source_bucket_name, "only")
 
-    file_key_name = event['Records'][0]['s3']['object']['key']
-    print('File key name is: ', file_key_name, "only")
+#     file_key_name = event['Records'][0]['s3']['object']['key']
+#     print('File key name is: ', file_key_name, "only")
     
-    bucket = s3_resource.Bucket(source_bucket_name)
-    path, filename = os.path.split(file_key_name)
-    print('path found for S3 is:', path)
-    print('Key we are downloading is: ',filename)
+#     bucket = s3_resource.Bucket(source_bucket_name)
+#     path, filename = os.path.split(file_key_name)
+#     print('path found for S3 is:', path)
+#     print('Key we are downloading is: ',filename)
     
     print('before downloading file from S3, filename: at /tmp/', filename)
     try:
