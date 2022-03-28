@@ -9,6 +9,9 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 
+import json
+import base64
+from io import BytesIO
 
 s3 = boto3.client('s3')
 s3_resource = boto3.resource('s3')
