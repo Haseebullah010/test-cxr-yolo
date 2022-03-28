@@ -27,9 +27,9 @@ def lambda_handler(event, context):
         print ("in first try")
         image_bytes = event['body'].encode('utf-8')
         img_b64dec = base64.b64decode(image_bytes)
-        filename = BytesIO(img_b64dec)
-        out_file = open('/tmp/kk.png', 'wb')
-        out_file.write(filename)
+#         filename = BytesIO(img_b64dec)
+        filename = open('/tmp/kk.png', 'wb')
+        filename.write(img_b64dec)
 #         s3.put_object(Bucket=destination, Key='input_images/'+'l.jpg', Body=img_byteIO)
 #         return {'statusCode': 200, 'body': json.dumps({'message': 'successful lambda function call'}), 'headers': {'Access-Control-Allow-Origin': '*'}}
     except Exception as e:
