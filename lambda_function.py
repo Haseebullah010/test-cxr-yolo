@@ -28,6 +28,8 @@ def lambda_handler(event, context):
         image_bytes = event['body'].encode('utf-8')
         img_b64dec = base64.b64decode(image_bytes)
         filename = BytesIO(img_b64dec)
+        out_file = open('/tmp/kk.png', 'wb')
+        out_file.write(decode_b64)
 #         s3.put_object(Bucket=destination, Key='input_images/'+'l.jpg', Body=img_byteIO)
 #         return {'statusCode': 200, 'body': json.dumps({'message': 'successful lambda function call'}), 'headers': {'Access-Control-Allow-Origin': '*'}}
     except Exception as e:
@@ -47,10 +49,10 @@ def lambda_handler(event, context):
 #     print('Key we are downloading is: ',filename)
     
     print('before downloading file from S3, filename: at /tmp/', filename)
-    try:
-        bucket.download_file(file_key_name, "/tmp/" + filename)
-    except Exception as e:
-        print('failed to download file from S3, exception occurred: ',e)
+#     try:
+#         bucket.download_file(file_key_name, "/tmp/" + filename)
+#     except Exception as e:
+#         print('failed to download file from S3, exception occurred: ',e)
 
     print('inside this directory: ',os.getcwd())
     files = [f for f in os.listdir('.') if os.path.isfile(f)]
@@ -58,7 +60,7 @@ def lambda_handler(event, context):
 
     print('before calling detect python file')
     try:
-        os.system("python3 detect.py --project /tmp/ --exist-ok  --save-txt --source /tmp/"+ filename  )
+        os.system("python3 detect.py --project /tmp/ --exist-ok  --save-txt --source /tmp/"+ "kk.png"  )
     except Exception as e:
         print('exception occurred in detect python file: ', e)
 
