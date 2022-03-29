@@ -28,13 +28,6 @@ def lambda_handler(event, context):
         image=(base64.b64decode((image_bytes)))
         decodeit.write(image)
         decodeit.close()
-        
-        decodeit1 = open('l.png', 'wb')
-        image1=(base64.b64decode((image_bytes)))
-        decodeit1.write(image1)
-        decodeit1.close()
-        
-        
     except Exception as e:
         print ("in first except",e)
     filename = "l.png"
