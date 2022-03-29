@@ -23,12 +23,14 @@ def lambda_handler(event, context):
     print ("in lambda function")
     try:
         print ("in first try")
-        image_bytes = event['body'].encode('utf-8')
-        img_b64dec = base64.b64decode(image_bytes)
-        filename = open('/tmp/kk.png', 'wb')
-        filename.write(img_b64dec)
+        image_bytes = event['body'].encode('utf-8')       
+        decodeit = open(os.path.join('tmp/','l.png'), 'wb')
+        image=(base64.b64decode((image_bytes)))
+        decodeit.write(image)
+        decodeit.close()
     except Exception as e:
         print ("in first except",e)
+    filename = "l.png"
     print('before downloading file from S3, filename: at /tmp/', filename)
     print('inside this directory: ',os.getcwd())
     files = [f for f in os.listdir('.') if os.path.isfile(f)]
