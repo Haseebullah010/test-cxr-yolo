@@ -38,7 +38,7 @@ def lambda_handler(event, context):
 
     print('before calling detect python file')
     try:
-        os.system("python3 detect.py --project /tmp/ --exist-ok  --save-txt --source /tmp/"+ "kk.png"  )
+        os.system("python3 detect.py --project /tmp/ --exist-ok  --save-txt --source /tmp/"+ filename  )
     except Exception as e:
         print('exception occurred in detect python file: ', e)
 
