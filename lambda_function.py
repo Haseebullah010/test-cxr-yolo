@@ -25,13 +25,13 @@ def lambda_handler(event, context):
         print ("in first try")
         image_bytes = event['body'].encode('utf-8')   
         print ("image bytes",image_bytes)  
-        decodeit = open('/tmp/1.png', 'wb')
+        decodeit = open('/tmp/1.jpg', 'wb')
         image=(base64.b64decode((image_bytes)))
         decodeit.write(image)
         decodeit.close()
     except Exception as e:
         print ("in first except",e)
-    filename = "l.png"
+    filename = "l.jpg"
     print('before downloading file from S3, filename: at /tmp/', filename)
     print('inside this directory: ',os.getcwd())
     files = [f for f in os.listdir('.') if os.path.isfile(f)]
@@ -40,7 +40,7 @@ def lambda_handler(event, context):
     print('files in /tmp/ are: ', os.system('ls /tmp/'))
     print('before calling detect python file')
     try:
-        os.system("python3 detect.py --project /tmp/ --exist-ok  --save-txt --source /tmp/1.png")
+        os.system("python3 detect.py --project /tmp/ --exist-ok  --save-txt --source /tmp/1.jpg")
     except Exception as e:
         print('exception occurred in detect python file: ', e)
 
