@@ -23,7 +23,8 @@ def lambda_handler(event, context):
     print ("in lambda function")
     try:
         print ("in first try")
-        image_bytes = event['body'].encode('utf-8')       
+        image_bytes = event['body'].encode('utf-8')   
+        print ("image bytes",image_bytes)  
         decodeit = open('/tmp/1.png', 'wb')
         image=(base64.b64decode((image_bytes)))
         decodeit.write(image)
