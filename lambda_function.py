@@ -35,10 +35,11 @@ def lambda_handler(event, context):
     print('inside this directory: ',os.getcwd())
     files = [f for f in os.listdir('.') if os.path.isfile(f)]
     print('contents in current directory:', files)
-
+    print ("checking how many images in tmp folder")
+    print('files in /tmp/ are: ', os.system('ls /tmp/')
     print('before calling detect python file')
     try:
-        os.system("python3 detect.py --project /tmp/ --exist-ok  --save-txt --source /tmp/"+ filename  )
+        os.system("python3 detect.py --project /tmp/ --exist-ok  --save-txt --source /tmp/1.png")
     except Exception as e:
         print('exception occurred in detect python file: ', e)
 
