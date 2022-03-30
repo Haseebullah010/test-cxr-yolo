@@ -13,7 +13,7 @@ s3 = boto3.client('s3')
 s3_resource = boto3.resource('s3')
 
 #S3 bucket name 
-destination_bucketname = os.environ['test_yolo_bucket']
+destination_bucketname = os.environ['yolo_test_lambda']
 def lambda_handler(event, context):
 
     print("Event :", event)
