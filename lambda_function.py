@@ -5,10 +5,6 @@ import smtplib
 from email.message import EmailMessage
 from os import environ
 from datetime import date
-from email.mime.text import MIMEText
-from email.mime.image import MIMEImage
-from email.mime.multipart import MIMEMultipart
-
 import json
 import base64
 from io import BytesIO
@@ -18,29 +14,33 @@ s3_resource = boto3.resource('s3')
 
 #S3 bucket name 
 destination_bucketname = os.environ['test_yolo_bucket']
-destination = 'test-yolo-bucket'
 def lambda_handler(event, context):
-    print ("in lambda function")
-    try:
-        print ("in first try")
-        image_bytes = event['body'].encode('utf-8')   
-        print ("image bytes",image_bytes)  
-        decodeit = open('/tmp/1.jpg', 'wb')
-        image=(base64.b64decode((image_bytes)))
-        decodeit.write(image)
-        decodeit.close()
-    except Exception as e:
-        print ("in first except",e)
-    filename = "l.jpg"
+
+    print("Event :", event)
+    source_bucket_name = event['Records'][0]['s3']['bucket']['name']
+    print("Source bucket name is: ", source_bucket_name, "only")
+
+    file_key_name = event['Records'][0]['s3']['object']['key']
+    print('File key name is: ', file_key_name, "only")
+    
+    bucket = s3_resource.Bucket(source_bucket_name)
+    path, filename = os.path.split(file_key_name)
+    print('path found for S3 is:', path)
+    print('Key we are downloading is: ',filename)
+    
     print('before downloading file from S3, filename: at /tmp/', filename)
+    try:
+        bucket.download_file(file_key_name, "/tmp/" + filename)
+    except Exception as e:
+        print('failed to download file from S3, exception occurred: ',e)
+
     print('inside this directory: ',os.getcwd())
     files = [f for f in os.listdir('.') if os.path.isfile(f)]
     print('contents in current directory:', files)
-    print ("checking how many images in tmp folder")
-    print('files in /tmp/ are: ', os.system('ls /tmp/'))
+
     print('before calling detect python file')
     try:
-        os.system("python3 detect.py --project /tmp/ --exist-ok  --save-txt --source /tmp/1.jpg")
+        os.system("python3 detect.py --project /tmp/ --exist-ok  --save-txt --source /tmp/"+ filename  )
     except Exception as e:
         print('exception occurred in detect python file: ', e)
 
@@ -53,4 +53,3 @@ def lambda_handler(event, context):
         s3.upload_file('/tmp/exp2/'+filename, destination_bucketname,"output_images/"+ filename)
     
     print('end of yolo processing and uploading output image to s3 bucket')
-
